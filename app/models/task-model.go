@@ -47,7 +47,11 @@ func (t *Task) GetTaskProgressPercentage() int {
 
 }
 
-func (t *Task) UpdateTask(name string, dueDate int64, priority int, status string) bool {
+func (t *Task) UpdateTask(name string, dueDate int64, priority int, status string, user *User) bool {
+	if t.User != user {
+		return false
+	}
+
 	if name != "" {
 		t.Name = name
 	}
@@ -77,7 +81,11 @@ func (t *Task) CheckIfExist() bool {
 	return false
 }
 
-func (t *Task) DeleteTask() bool {
+func (t *Task) DeleteTask(user *User) bool {
+	if t.User != user {
+		return false
+	}
+
 	_, exists := Tasks[t]
 	if !exists {
 		return false

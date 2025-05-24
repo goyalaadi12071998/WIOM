@@ -19,9 +19,9 @@ func InitialiseTaskService() ITaskService {
 
 type ITaskService interface {
 	CreateTask(name string, taskType string, user *models.User, dueDate int64, priority int16, sourceTask *models.Task) *models.Task
-	DeleteTask(task *models.Task) bool
+	DeleteTask(task *models.Task, user *models.User) bool
 	GetTasksForUser(user *models.User, status string) []models.Task
-	UpdateTask(task *models.Task, name string, dueDate int64, priority int, status string) bool
+	UpdateTask(task *models.Task, name string, dueDate int64, priority int, status string, user *models.User) bool
 	GetTaskProgressPercentage(task *models.Task) int
 }
 
@@ -31,11 +31,10 @@ func (t TaskService) CreateTask(name string, taskType string, user *models.User,
 	return task
 }
 
-func (t TaskService) DeleteTask(task *models.Task) bool {
+func (t TaskService) DeleteTask(task *models.Task, user *models.User) bool {
 	taskExist := task.CheckIfExist()
 	if taskExist {
-		task.DeleteTask()
-		return true
+		return task.DeleteTask(user)
 	}
 
 	return false
@@ -55,13 +54,13 @@ func (t TaskService) GetTasksForUser(user *models.User, status string) []models.
 	return result
 }
 
-func (t TaskService) UpdateTask(task *models.Task, name string, dueDate int64, priority int, status string) bool {
+func (t TaskService) UpdateTask(task *models.Task, name string, dueDate int64, priority int, status string, user *models.User) bool {
 	exist := task.CheckIfExist()
 	if !exist {
 		log.Fatal(errors.New("task does not exist"))
 	}
 
-	success := task.UpdateTask(name, dueDate, priority, status)
+	success := task.UpdateTask(name, dueDate, priority, status, user)
 	return success
 }
 

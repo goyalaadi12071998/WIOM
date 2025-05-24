@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strconv"
 	"time"
 
 	"github.com/goyalaadi12071998/app/boot"
@@ -28,24 +27,27 @@ func main() {
 	task1 := controllers.TaksController.CreateTask(
 		"Task - A", constants.TASK_TYPE_TASK, user1, time.Now().Add(time.Hour*36).Unix(), 10, nil,
 	)
-	task2 := controllers.TaksController.CreateTask(
+	controllers.TaksController.CreateTask(
 		"Task - B", constants.TASK_TYPE_TASK, user2, time.Now().Add(time.Hour*36).Unix(), 10, nil,
 	)
-	controllers.TaksController.CreateTask(
+	task3 := controllers.TaksController.CreateTask(
 		"Task - C", constants.TASK_TYPE_SUBTASK, user1, time.Now().Add(time.Hour*36).Unix(), 10, task1,
 	)
 	controllers.TaksController.CreateTask(
 		"Task - D", constants.TASK_TYPE_SUBTASK, user1, time.Now().Add(time.Hour*36).Unix(), 10, task1,
 	)
 
-	// controllers.TaksController.UpdateTask(task1, "Task-AA", 0, 3, "PENDING")
-	// // tasks := controllers.TaksController.GetAllTasksForUser(user1, "")
-	// fmt.Println(controllers.TaksController.GetTaskProgressPercentage(task1))
-	controllers.TaksController.UpdateTask(task2, "Task-AA", 0, 3, "COMPLETED")
-	fmt.Println(controllers.TaksController.GetTaskProgressPercentage(task2))
+	// controllers.TaksController.GetAllTasksForUser(user1, "")
+	// // fmt.Print(len(tasks))
 
-	tasks := controllers.TaksController.GetAllTasksForUser(user1, "")
-	for _, task := range tasks {
-		fmt.Println("Name:", task.Name+", Priority:"+strconv.Itoa(int(task.Priority)))
-	}
+	// controllers.TaksController.UpdateTask(task1, "Task A - New", 0, 0, "COMPLETED")
+
+	success := controllers.TaksController.DeleteTask(task3, user2)
+	fmt.Println(success)
+	success = controllers.TaksController.DeleteTask(task3, user1)
+	fmt.Println(success)
+
+	// tasks = controllers.TaksController.GetAllTasksForUser(user1, "")
+	// fmt.Print(len(tasks))
+
 }

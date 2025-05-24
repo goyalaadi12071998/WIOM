@@ -22,8 +22,8 @@ func (t taskcontroller) CreateTask(name string, taskType string, user *models.Us
 	return task
 }
 
-func (t taskcontroller) DeleteTask(task *models.Task) bool {
-	success := t.taskService.DeleteTask(task)
+func (t taskcontroller) DeleteTask(task *models.Task, user *models.User) bool {
+	success := t.taskService.DeleteTask(task, user)
 	return success
 }
 
@@ -36,6 +36,6 @@ func (t taskcontroller) GetTaskProgressPercentage(task *models.Task) int {
 	return t.taskService.GetTaskProgressPercentage(task)
 }
 
-func (t taskcontroller) UpdateTask(task *models.Task, name string, dueDate int64, priority int, status string) bool {
-	return t.taskService.UpdateTask(task, name, dueDate, priority, status)
+func (t taskcontroller) UpdateTask(task *models.Task, name string, dueDate int64, priority int, status string, user *models.User) bool {
+	return t.taskService.UpdateTask(task, name, dueDate, priority, status, user)
 }
