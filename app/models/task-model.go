@@ -2,6 +2,8 @@ package models
 
 import (
 	"time"
+
+	"github.com/goyalaadi12071998/app/constants"
 )
 
 var Tasks map[*Task]bool = map[*Task]bool{}
@@ -30,14 +32,14 @@ func (t *Task) GetTaskProgressPercentage() int {
 	allSubTasks := []*Task{}
 	totalSubTask := 0
 	for val := range Tasks {
-		if val.SourceTask == t && val.Status == "COMPLETED" {
+		if val.SourceTask == t && val.Status == constants.TASK_STATUS_COMPLETED {
 			totalSubTask += 1
 			allSubTasks = append(allSubTasks, val)
 		}
 	}
 
 	if totalSubTask == 0 {
-		if t.Status != "COMPLETED" {
+		if t.Status != constants.TASK_STATUS_COMPLETED {
 			return 0
 		}
 		return 100
@@ -109,7 +111,7 @@ func NewTask(name string, taskType string, user *User, dueDate int64, priority i
 		SourceTask: sourceTask,
 		DueDate:    dueDate,
 		Priority:   priority,
-		Status:     "CREATED",
+		Status:     constants.TASK_STATUS_CREATED,
 		CreatedAt:  time.Now().Unix(),
 		UpdatedAt:  time.Now().Unix(),
 	}
