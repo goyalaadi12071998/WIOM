@@ -100,7 +100,7 @@ func (t *Task) SaveTaskToDB() {
 }
 
 // I have created interfaces but not using here require little more code to but the functionality will going to be same
-// we just have to remove *Task -> ITask
+// we just have to remove *Task -> ITask and add a unique parameter to the model which we can pass to/from frontend
 func NewTask(name string, taskType string, user *User, dueDate int64, priority int16, sourceTask *Task) *Task {
 	return &Task{
 		Name:       name,
