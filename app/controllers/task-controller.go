@@ -33,7 +33,7 @@ func (t taskcontroller) GetAllTasksForUser(user *models.User, status string) []m
 }
 
 func (t taskcontroller) GetTaskProgressPercentage(task *models.Task) int {
-	return task.GetTaskProgressPercentage()
+	return t.taskService.GetTaskProgressPercentage(task)
 }
 
 func (t taskcontroller) UpdateTask(task *models.Task, name string, dueDate int64, priority int, status string) bool {

@@ -22,6 +22,7 @@ type ITaskService interface {
 	DeleteTask(task *models.Task) bool
 	GetTasksForUser(user *models.User, status string) []models.Task
 	UpdateTask(task *models.Task, name string, dueDate int64, priority int, status string) bool
+	GetTaskProgressPercentage(task *models.Task) int
 }
 
 func (t TaskService) CreateTask(name string, taskType string, user *models.User, dueDate int64, priority int16, sourceTask *models.Task) *models.Task {
@@ -62,4 +63,8 @@ func (t TaskService) UpdateTask(task *models.Task, name string, dueDate int64, p
 
 	success := task.UpdateTask(name, dueDate, priority, status)
 	return success
+}
+
+func (t TaskService) GetTaskProgressPercentage(task *models.Task) int {
+	return task.GetTaskProgressPercentage()
 }

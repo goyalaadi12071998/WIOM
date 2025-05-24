@@ -30,8 +30,8 @@ func (t *Task) GetTaskProgressPercentage() int {
 	allSubTasks := []*Task{}
 	totalSubTask := 0
 	for val := range Tasks {
-		totalSubTask += 1
 		if val.SourceTask == t && val.Status == "COMPLETED" {
+			totalSubTask += 1
 			allSubTasks = append(allSubTasks, val)
 		}
 	}
